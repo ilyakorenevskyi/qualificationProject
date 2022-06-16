@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" name="csrf_token" content="{{ csrf_token }}">
+    <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+    <link rel="icon" type="image/x-icon" href="{{MEDIA_URL}}media/logo.png">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Нейронні новини</title>
+
+</head>
+
+<body>
+    <div class = "header">
+        <a href="/news_classification">
+        <div class = "center">
+            <img src="{{MEDIA_URL}}media/logo.png" style="width: 80px; height: 55px" alt="Logo">
+            Нейронні новини
+        </div>
+        </a>
+    </div>
+    <div class = "menu">
+        <div class = "center">
+            <div class = "menu_item "><a href="/news_classification">Перевірка категорії</a></div>
+            <div class = "menu_item current">Згенеруй мені новину</div>
+        </div>
+    </div>
+    <div class = "main">
+        <div class = "center">
+        <form action="/news_generation" method="post">
+             {% csrf_token %}
+            <label>категорія</label>
+            <select name="category" id="news">
+                <option value="world_news">Новини світу</option>
+                <option value="war">Війна</option>
+                <option value="economy">Економіка</option>
+                <option value="sport">Спgit rm --cached name_of_fileорт</option>
+                 <option value="show_business">Шоу-бізнес</option>
+                <option value="science_tech">Наука та технології</option>
+            </select>
+            <label>текст</label>
+            <textarea placeholder="введи перші літери..."  name="text" required>{{ text }}</textarea>
+            <label class="submit" onclick="javascript:this.parentNode.submit();">>згенерувати!</label>
+            <div class = "result">{{ result_text }}</div>
+        </form>
+        </div>
+    </div>
+
+    <div id="feedback_button"> <div>надіслати фідбек?<br> <img src="{{MEDIA_URL}}media/feedback.png"  alt="feedback"></div></div>
+
+    <div id="feedback">
+        <div class="feedback_content">
+            <form action="/feedback" method="post">
+                {% csrf_token %}
+                <label>категорія</label>
+                <select name="category" id="news">
+                    <option value="world_news">Новини світу</option>
+                    <option value="war">Війна</option>
+                    <option value="economy">Економіка</option>
+                    <option value="sport">Спорт</option>
+                    <option value="show_business">Шоу-бізнес</option>
+                    <option value="science_tech">Наука та технології</option>
+                </select>
+                <label>текст</label>
+                <textarea placeholder="введи запропоновану новину"  name="text" required></textarea>
+                <label>відгук</label>
+                <textarea placeholder="введи відгук"  name="text" required></textarea>
+                <label class="submit" onclick="javascript:this.parentNode.submit();">>надіслати!</label>
+                <label class="submit" id="feedback_close">х-закрити</label>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src=" {% static 'js/feedback.js' %}"></script>
+</body>
+</html>
